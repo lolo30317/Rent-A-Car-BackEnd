@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -33,7 +34,7 @@ namespace Business.Concrete
             _userdal.Delete(user);
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public IDataResult<User> Get(int id)
         {
             return new SuccessDataResult<User>(_userdal.Get(u=>u.Id==id));
@@ -43,7 +44,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<User>(_userdal.Get(u => u.Email == mail));
         }
-
+        [CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
            return new SuccessDataResult<List<User>>(_userdal.GetAll());

@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -34,16 +35,14 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [CacheAspect]
         public IDataResult<List<Color>>  GetAll()
         {
             return new SuccessDataResult<List<Color>> (_colorDal.GetAll());
             
         }
 
-        
-
-      
-
+        [CacheAspect]
         public IDataResult<List<Color>> GetColorList(string ColorName)
         {
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorName == ColorName));

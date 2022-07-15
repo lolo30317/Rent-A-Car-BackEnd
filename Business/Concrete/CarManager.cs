@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -49,7 +50,7 @@ namespace Business.Concrete
         }
 
 
-
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour==7)
@@ -58,12 +59,12 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<Car>>(_cardal.GetAll(),Messages.CarListed); 
         }
-
+        [CacheAspect]
         public IDataResult<List<Car>> GetAllByBrandId(int brandid)
         {
             return new SuccessDataResult<List<Car>>(_cardal.GetAll(p => p.BrandId == brandid),Messages.CarsListedByBrandId); ;
         }
-
+        [CacheAspect]
         public IDataResult<List<Car>> GetAllByColorId(int colorid)
         {
             return new SuccessDataResult<List<Car>>(_cardal.GetAll(p => p.ColorId == colorid), Messages.CarsListedByColorId);

@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -33,12 +34,12 @@ namespace Business.Concrete
             _customerdal.Delete(customer);
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public IDataResult<List<Customer>> GetAll()
         {
            return new SuccessDataResult<List<Customer>>(_customerdal.GetAll());
         }
-
+        [CacheAspect]
         public IDataResult<Customer> GetById(int id)
         {
            return new SuccessDataResult<Customer>(_customerdal.Get(c=>c.UserId==id));
